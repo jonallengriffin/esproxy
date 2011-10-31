@@ -127,7 +127,7 @@ if __name__ == "__main__":
     parser.add_option('-d', '--daemon', dest='daemon',
                       default=False, action='store_true',
                       help="run as posix daemon")
-    parser.add_option('-h', '--host', dest='host',
+    parser.add_option('--host', dest='host',
                       default='127.0.0.1',
                       help='host to run proxy on')
     parser.add_option('--pidfile', dest='pidfile',

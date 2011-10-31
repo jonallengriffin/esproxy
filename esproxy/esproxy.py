@@ -124,6 +124,12 @@ class ESProxy(object):
 
 if __name__ == "__main__":
     parser = OptionParser(usage='%prog [options] elasaticsearch_address')
+    parser.add_option('-d', '--daemon', dest='daemon',
+                      default=False, action='store_true',
+                      help="run as posix daemon")
+    parser.add_option('--pidfile', dest='pidfile',
+                      default='esproxy.pid',
+                      help='pidfile for running esproxy as daemon')
     parser.add_option('-p', '--port', dest='port',
                       default=9210, type='int',
                       help="port to run proxy on")
@@ -132,6 +138,10 @@ if __name__ == "__main__":
     if not args:
         parser.print_usage()
         parser.exit()
+
+    if options.daemon:
+        from daemon import daemonize
+        daemonize(options.pidfile)
 
     EShost = args[0]
     proxy = ESProxy(proxy_port=options.port)

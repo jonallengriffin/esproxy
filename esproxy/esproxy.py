@@ -113,7 +113,7 @@ class ThreadedHTTPServer(ThreadingMixIn, BaseHTTPServer.HTTPServer):
 
 class ESProxy(object):
 
-    def __init__(self, proxy_port=9210):
+    def __init__(self, host='127.0.0.1', proxy_port=9210):
         self.proxy_port = proxy_port
 
     def start(self):
@@ -127,6 +127,9 @@ if __name__ == "__main__":
     parser.add_option('-d', '--daemon', dest='daemon',
                       default=False, action='store_true',
                       help="run as posix daemon")
+    parser.add_option('-h', '--host', dest='host',
+                      default='127.0.0.1',
+                      help='host to run proxy on')
     parser.add_option('--pidfile', dest='pidfile',
                       default='esproxy.pid',
                       help='pidfile for running esproxy as daemon')
@@ -144,5 +147,5 @@ if __name__ == "__main__":
         daemonize(options.pidfile)
 
     EShost = args[0]
-    proxy = ESProxy(proxy_port=options.port)
+    proxy = ESProxy(host=options.host, proxy_port=options.port)
     proxy.start()

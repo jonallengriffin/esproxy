@@ -11,7 +11,7 @@ except (OSError, IOError):
     description = ''
 
 # dependencies
-deps = ['daemon == 1.0']
+deps = ['python-daemon == 1.6']
 
 setup(name='esproxy',
       version=version,

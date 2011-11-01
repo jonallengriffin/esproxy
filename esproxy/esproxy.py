@@ -121,10 +121,11 @@ def run_proxy(options):
 class ESProxy(object):
 
     def __init__(self, host='127.0.0.1', proxy_port=9210):
+        self.host = host
         self.proxy_port = proxy_port
 
     def start(self):
-        httpd = ThreadedHTTPServer(('127.0.0.1', self.proxy_port),
+        httpd = ThreadedHTTPServer((self.host, self.proxy_port),
                                    ESRequestHandler)
         httpd.serve_forever()
 

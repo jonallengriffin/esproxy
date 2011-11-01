@@ -37,6 +37,7 @@
 import BaseHTTPServer
 import httplib
 from optparse import OptionParser
+import os
 from SocketServer import ThreadingMixIn
 import traceback
 

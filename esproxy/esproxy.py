@@ -110,6 +110,12 @@ class ThreadedHTTPServer(ThreadingMixIn, BaseHTTPServer.HTTPServer):
         thread.
     """
 
+def run_proxy(options):
+    proxy = ESProxy(host=options.host, proxy_port=options.port)
+    #fp = open(options.pidfile, "w")
+    #fp.write("%d\n" % os.getpid())
+    #fp.close()
+    proxy.start()
 
 class ESProxy(object):
 
@@ -120,7 +126,6 @@ class ESProxy(object):
         httpd = ThreadedHTTPServer(('127.0.0.1', self.proxy_port),
                                    ESRequestHandler)
         httpd.serve_forever()
-
 
 if __name__ == "__main__":
     parser = OptionParser(usage='%prog [options] elasaticsearch_address')
@@ -142,10 +147,11 @@ if __name__ == "__main__":
         parser.print_usage()
         parser.exit()
 
-    if options.daemon:
-        from daemon import daemonize
-        daemonize(options.pidfile)
-
     EShost = args[0]
-    proxy = ESProxy(host=options.host, proxy_port=options.port)
-    proxy.start()
+
+    if options.daemon:
+        import daemon
+        with daemon.DaemonContext():
+            run_proxy(options)
+    else:
+        run_proxy(options)

@@ -112,9 +112,9 @@ class ThreadedHTTPServer(ThreadingMixIn, BaseHTTPServer.HTTPServer):
 
 def run_proxy(options):
     proxy = ESProxy(host=options.host, proxy_port=options.port)
-    #fp = open(options.pidfile, "w")
-    #fp.write("%d\n" % os.getpid())
-    #fp.close()
+    fp = open(options.pidfile, "w")
+    fp.write("%d\n" % os.getpid())
+    fp.close()
     proxy.start()
 
 class ESProxy(object):
